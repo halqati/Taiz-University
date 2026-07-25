@@ -1,3 +1,12 @@
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import firebaseConfig from '../firebase-applet-config.json';
+
+function getDbInstance() {
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+  return getFirestore(app, firebaseConfig.firestoreDatabaseId);
+}
+
 export default async function handler(req: any, res: any) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -25,17 +34,28 @@ export default async function handler(req: any, res: any) {
       });
     }
 
-    // Colleges endpoint (Static test data for Firebase isolation step)
+    // Colleges endpoint - Direct Firebase test
     if (pathname === '/telegram/colleges' || pathname === '/api/telegram/colleges' || pathname.endsWith('/colleges')) {
-      return res.status(200).json({
-        success: true,
-        data: [
-          {
-            id: 'test',
-            name: 'Test College',
-          },
-        ],
-      });
+      try {
+        const db = getDbInstance();
+        const snap = await getDocs(collection(db, 'colleges'));
+        const list = snap.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        return res.status(200).json({
+          success: true,
+          count: list.length,
+          data: list,
+        });
+      } catch (fbError: any) {
+        console.error('Firebase test fetch error:', fbError);
+        return res.status(200).json({
+          success: false,
+          error: fbError?.message || String(fbError),
+          code: fbError?.code || 'UNKNOWN_FIREBASE_ERROR',
+        });
+      }
     }
 
     return res.status(404).json({
@@ -52,6 +72,7 @@ export default async function handler(req: any, res: any) {
     });
   }
 }
+
 
 
 
