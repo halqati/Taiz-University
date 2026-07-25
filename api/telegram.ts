@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { telegramRouter } from '../telegram-api';
+import { telegramRouter } from '../telegram-api/index.ts';
 
 const app = express();
 

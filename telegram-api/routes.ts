@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { authenticateTelegramApi } from './middleware';
+import { authenticateTelegramApi } from './middleware.ts';
 import {
   getActiveColleges,
   getActiveLevelsByCollege,
@@ -7,7 +7,7 @@ import {
   getActiveLecturesByCourse,
   getActiveFilesByLecture,
   getTelegramBotSettings,
-} from './services';
+} from './services.ts';
 
 const router = Router();
 
