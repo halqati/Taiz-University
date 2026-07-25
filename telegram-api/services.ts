@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where, orderBy, doc, getDoc } from 'firebase/firestore';
-import { db } from '../src/lib/firebase.ts';
-import { College, Level, Course, Lecture, LibraryFile, TelegramSettings } from '../src/types/index.ts';
+import { db } from '../src/lib/firebase';
+import { College, Level, Course, Lecture, LibraryFile, TelegramSettings } from '../src/types';
 
 /**
  * 1. Fetch active, non-deleted Colleges

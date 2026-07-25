@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
-import { telegramRouter } from './telegram-api/index.ts';
+import { telegramRouter } from './telegram-api/index';
 
 const PORT = 3000;
 

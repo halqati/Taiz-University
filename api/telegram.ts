@@ -1,14 +1,18 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
-import { telegramRouter } from '../telegram-api/index.ts';
+import { telegramRouter } from '../telegram-api/index';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Mount the router on both /telegram and / to handle Vercel serverless function rewrites
+// Mount the router on all potential paths passed by Vercel rewrites
 app.use('/telegram', telegramRouter);
+app.use('/api/telegram', telegramRouter);
 app.use('/', telegramRouter);
 
-export default app;
+// Export default Vercel serverless function handler
+export default function handler(req: Request, res: Response) {
+  return app(req, res);
+}

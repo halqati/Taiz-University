@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { authenticateTelegramApi } from './middleware.ts';
+import { authenticateTelegramApi } from './middleware';
 import {
   getActiveColleges,
   getActiveLevelsByCollege,
@@ -7,16 +7,13 @@ import {
   getActiveLecturesByCourse,
   getActiveFilesByLecture,
   getTelegramBotSettings,
-} from './services.ts';
+} from './services';
 
 const router = Router();
 
-// Apply secret protection middleware to all telegram API endpoints
-router.use(authenticateTelegramApi);
-
 /**
  * GET /telegram/health
- * Verification endpoint to test API secret and connection status
+ * Public verification endpoint to test API health and serverless connection status
  */
 router.get('/health', (_req: Request, res: Response) => {
   res.json({
@@ -26,6 +23,9 @@ router.get('/health', (_req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Apply secret protection middleware to all data endpoints below
+router.use(authenticateTelegramApi);
 
 /**
  * GET /telegram/colleges
