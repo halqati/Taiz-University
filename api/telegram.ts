@@ -1,3 +1,5 @@
+import { getActiveColleges } from '../telegram-api/services';
+
 export default async function handler(req: any, res: any) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -16,20 +18,39 @@ export default async function handler(req: any, res: any) {
   const url = req.url || '';
   const pathname = url.split('?')[0];
 
-  // Native route matching
-  if (pathname === '/telegram/health' || pathname === '/api/telegram/health' || pathname.endsWith('/health')) {
-    return res.status(200).json({
-      success: true,
-      status: 'ok',
+  try {
+    // Health endpoint
+    if (pathname === '/telegram/health' || pathname === '/api/telegram/health' || pathname.endsWith('/health')) {
+      return res.status(200).json({
+        success: true,
+        status: 'ok',
+      });
+    }
+
+    // Colleges endpoint
+    if (pathname === '/telegram/colleges' || pathname === '/api/telegram/colleges' || pathname.endsWith('/colleges')) {
+      const colleges = await getActiveColleges();
+      return res.status(200).json({
+        success: true,
+        data: colleges,
+      });
+    }
+
+    return res.status(404).json({
+      success: false,
+      error: 'Not Found',
+      path: pathname,
+    });
+  } catch (error: any) {
+    console.error('Serverless Handler Error:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal Server Error',
+      details: error?.message || String(error),
     });
   }
-
-  return res.status(200).json({
-    success: true,
-    status: 'ok',
-    path: pathname,
-  });
 }
+
 
 
 

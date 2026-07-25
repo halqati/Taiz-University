@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
-import { telegramRouter } from './telegram-api/index';
+import telegramHandler from './api/telegram';
 
 const PORT = 3000;
 
@@ -12,8 +12,9 @@ async function startServer() {
   app.use(cors());
   app.use(express.json());
 
-  // Mount Telegram API Router BEFORE Vite / Static middlewares
-  app.use('/telegram', telegramRouter);
+  // Mount Telegram API Handler BEFORE Vite / Static middlewares
+  app.all('/telegram*', (req, res) => telegramHandler(req, res));
+  app.all('/api/telegram*', (req, res) => telegramHandler(req, res));
 
   // Health check
   app.get('/api/health', (_req, res) => {
