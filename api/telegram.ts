@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { telegramRouter } from '../telegram-api/index';
 
@@ -12,7 +12,15 @@ app.use('/telegram', telegramRouter);
 app.use('/api/telegram', telegramRouter);
 app.use('/', telegramRouter);
 
-// Export default Vercel serverless function handler
-export default function handler(req: Request, res: Response) {
-  return app(req, res);
-}
+// Express global error handler to prevent process crashes
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  console.error('Unhandled Telegram API Serverless Error:', err);
+  res.status(500).json({
+    success: false,
+    error: 'Internal Server Error in Serverless Function',
+    details: err?.message || String(err),
+  });
+});
+
+export default app;
+
