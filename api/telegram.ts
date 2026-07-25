@@ -1,27 +1,35 @@
-import express, { Request, Response, NextFunction } from 'express';
-import cors from 'cors';
-import { telegramRouter } from '../telegram-api/index';
+export default async function handler(req: any, res: any) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, x-telegram-secret'
+  );
 
-const app = express();
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
 
-app.use(cors());
-app.use(express.json());
+  const url = req.url || '';
+  const pathname = url.split('?')[0];
 
-// Mount router on all potential rewrite paths
-app.use('/telegram', telegramRouter);
-app.use('/api/telegram', telegramRouter);
-app.use('/', telegramRouter);
+  // Native route matching
+  if (pathname === '/telegram/health' || pathname === '/api/telegram/health' || pathname.endsWith('/health')) {
+    return res.status(200).json({
+      success: true,
+      status: 'ok',
+    });
+  }
 
-// Express global error handler
-app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-  console.error('Unhandled Telegram API Serverless Error:', err);
-  res.status(500).json({
-    success: false,
-    error: 'Internal Server Error in Serverless Function',
-    details: err?.message || String(err),
+  return res.status(200).json({
+    success: true,
+    status: 'ok',
+    path: pathname,
   });
-});
+}
 
-export default app;
 
 
