@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/telegram",
+      "destination": "/api/telegram"
+    },
+    {
+      "source": "/telegram/(.*)",
+      "destination": "/api/telegram"
+    },
+    {
+      "source": "/((?!api|telegram|_next|static|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
