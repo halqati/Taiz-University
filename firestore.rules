@@ -1,0 +1,35 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow public read access to all library data (students, telegram bot, external apps)
+    match /{document=**} {
+      allow read: if true;
+    }
+
+    // Allow write operations for administrative operations
+    match /colleges/{collegeId} {
+      allow write: if request.auth != null || true;
+    }
+
+    match /levels/{levelId} {
+      allow write: if request.auth != null || true;
+    }
+
+    match /courses/{courseId} {
+      allow write: if request.auth != null || true;
+    }
+
+    match /lectures/{lectureId} {
+      allow write: if request.auth != null || true;
+    }
+
+    match /files/{fileId} {
+      allow write: if request.auth != null || true;
+    }
+
+    match /telegram_settings/{settingId} {
+      allow write: if request.auth != null || true;
+    }
+  }
+}

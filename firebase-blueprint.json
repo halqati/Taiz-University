@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "colleges": {
+      "title": "Colleges",
+      "description": "University colleges and faculties",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "status": { "type": "string" },
+        "order": { "type": "number" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "code", "status", "isDeleted"]
+    },
+    "levels": {
+      "title": "Academic Levels",
+      "description": "Academic levels/years for each college",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "collegeId": { "type": "string" },
+        "name": { "type": "string" },
+        "levelOrder": { "type": "number" },
+        "order": { "type": "number" },
+        "status": { "type": "string" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["collegeId", "name", "levelOrder", "status", "isDeleted"]
+    },
+    "courses": {
+      "title": "Courses",
+      "description": "Academic courses/subjects",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "collegeId": { "type": "string" },
+        "levelId": { "type": "string" },
+        "name": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string" },
+        "order": { "type": "number" },
+        "status": { "type": "string" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["collegeId", "levelId", "name", "status", "isDeleted"]
+    },
+    "lectures": {
+      "title": "Lectures",
+      "description": "Digital lectures within a course",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "courseId": { "type": "string" },
+        "collegeId": { "type": "string" },
+        "levelId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "lectureOrder": { "type": "number" },
+        "order": { "type": "number" },
+        "status": { "type": "string" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["courseId", "title", "lectureOrder", "status", "isDeleted"]
+    },
+    "files": {
+      "title": "Library Files",
+      "description": "Files uploaded to Firebase Storage for a lecture",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "lectureId": { "type": "string" },
+        "courseId": { "type": "string" },
+        "collegeId": { "type": "string" },
+        "levelId": { "type": "string" },
+        "name": { "type": "string" },
+        "fileName": { "type": "string" },
+        "originalName": { "type": "string" },
+        "extension": { "type": "string" },
+        "mimeType": { "type": "string" },
+        "size": { "type": "number" },
+        "sizeBytes": { "type": "number" },
+        "downloadUrl": { "type": "string" },
+        "url": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "type": { "type": "string" },
+        "isPublic": { "type": "boolean" },
+        "order": { "type": "number" },
+        "status": { "type": "string" },
+        "isDeleted": { "type": "boolean" },
+        "deletedAt": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["lectureId", "name", "downloadUrl", "type", "status", "isDeleted"]
+    },
+    "telegram_settings": {
+      "title": "Telegram Bot Settings",
+      "description": "Configuration settings for Telegram Bot integration",
+      "type": "object",
+      "properties": {
+        "botUsername": { "type": "string" },
+        "welcomeMessage": { "type": "string" },
+        "requiredChannels": { "type": "array" },
+        "mainMenu": { "type": "string" },
+        "supportContact": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  }
+}

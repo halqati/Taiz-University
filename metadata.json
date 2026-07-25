@@ -1,0 +1,6 @@
+{
+  "name": "منصة المكتبة الجامعية",
+  "description": "منصة إدارة المكتبة الجامعية - لوحة تحكم للمشرف لإدارة الكليات، المستويات، المواد، المحاضرات والملفات",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
