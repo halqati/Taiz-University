@@ -1,5 +1,14 @@
-import telegramRouter from './routes';
-import { authenticateTelegramApi } from './middleware';
+import { Router, Request, Response } from 'express';
 
-export { telegramRouter, authenticateTelegramApi };
-export default telegramRouter;
+const router = Router();
+
+router.get('/health', (_req: Request, res: Response) => {
+  res.json({
+    success: true,
+    status: 'ok',
+  });
+});
+
+export const telegramRouter = router;
+export default router;
+
