@@ -2,7 +2,17 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
-import defaultConfig from '../../firebase-applet-config.json';
+
+// Default Firebase configuration object (without importing JSON file to prevent Vercel ESM ERR_IMPORT_ATTRIBUTE_MISSING)
+const defaultConfig = {
+  projectId: 'ai-studio-applet-webapp-6637d',
+  appId: '1:246839558578:web:da968bfceb13625ca2e4ab',
+  apiKey: 'AIzaSyDENG5XvfyR3esvsPLOCTy4kU3A3QtGD1E',
+  authDomain: 'ai-studio-applet-webapp-6637d.firebaseapp.com',
+  firestoreDatabaseId: 'ai-studio-1a117e15-25fa-4b78-9cb8-47a667bf5596',
+  storageBucket: 'ai-studio-applet-webapp-6637d.firebasestorage.app',
+  messagingSenderId: '246839558578',
+};
 
 // Safely configure Firebase for both Vite frontend and Node Serverless environments
 const firebaseConfig = {

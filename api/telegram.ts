@@ -1,11 +1,5 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import firebaseConfig from '../firebase-applet-config.json';
-
-function getDbInstance() {
-  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-  return getFirestore(app, firebaseConfig.firestoreDatabaseId);
-}
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../src/lib/firebase';
 
 export default async function handler(req: any, res: any) {
   // Set CORS headers
@@ -37,7 +31,6 @@ export default async function handler(req: any, res: any) {
     // Colleges endpoint - Direct Firebase test
     if (pathname === '/telegram/colleges' || pathname === '/api/telegram/colleges' || pathname.endsWith('/colleges')) {
       try {
-        const db = getDbInstance();
         const snap = await getDocs(collection(db, 'colleges'));
         const list = snap.docs.map((doc) => ({
           id: doc.id,
