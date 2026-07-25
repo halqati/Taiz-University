@@ -1,5 +1,3 @@
-import { getActiveColleges } from '../telegram-api/services';
-
 export default async function handler(req: any, res: any) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -27,12 +25,16 @@ export default async function handler(req: any, res: any) {
       });
     }
 
-    // Colleges endpoint
+    // Colleges endpoint (Static test data for Firebase isolation step)
     if (pathname === '/telegram/colleges' || pathname === '/api/telegram/colleges' || pathname.endsWith('/colleges')) {
-      const colleges = await getActiveColleges();
       return res.status(200).json({
         success: true,
-        data: colleges,
+        data: [
+          {
+            id: 'test',
+            name: 'Test College',
+          },
+        ],
       });
     }
 
